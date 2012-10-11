@@ -1,0 +1,14 @@
+#twintegration{
+    margin: 20px 0;
+}
+#twintegration .formField{
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+#twintegration .formField label{
+    float: left;
+    font-weight: bold;
+    font-size: 1.1em;
+    display: block;
+    width: 100px;
+}
