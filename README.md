@@ -1,8 +1,10 @@
 #Twitter API Integration
 ##What?
-Demonstration php code to show you how you can connect properly to the new Twitter 1.1 API to make.
-There's also a demo page that illustrates the implementation
+Twitter recently carried on its API housekeeping, and that changed many things.
+Some of the requests to the API now require a properly authenticated user to work.
+In this php demonstration, we will show you how to properly authenticate your user using oAuth, to be authorised to make requests to the 1.1 API.
+There's also a demo page that illustrates the implementation.
 
 ##How?
-There's a complete blog article about the solution on NOE interactive's website here:
+There's a complete blog article about the solution on NOE interactive's website here: (coming soon).
 You can also view the demonstration located there: http://noe-interactive.com/demo/!/twitterapi
