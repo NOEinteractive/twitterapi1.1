@@ -6,5 +6,5 @@ In this php demonstration, we will show you how to properly authenticate your us
 There's also a demo page that illustrates the implementation.
 
 ##How?
-There's a complete blog article about the solution on NOE interactive's website here: (coming soon).
+There's a complete blog article about the solution on NOE interactive's website here: http://noe-interactive.com/integration-de-la-nouvelle-api-twitter-1-1
 You can also view the demonstration located there: http://noe-interactive.com/demo/!/twitterapi
