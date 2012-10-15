@@ -47,9 +47,10 @@
                     $consumer_secret=''; //Provide your application consumer secret
                     $oauth_token = ''; //Provide your oAuth Token
                     $oauth_token_secret = ''; //Provide your oAuth Token Secret
-                    if(!empty($consumer_key) && !empty($consumer_secret) && !empty($oauth_token) && !empty($oauth_token_secret)) {
 
                     //You can now copy paste the folowing
+
+                    if(!empty($consumer_key) && !empty($consumer_secret) && !empty($oauth_token) && !empty($oauth_token_secret)) {
 
                     //2 - Include @abraham's PHP twitteroauth Library
                     require_once('twitteroauth/twitteroauth.php');
@@ -62,6 +63,8 @@
                     $query = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=NOE_interactive&count=1'; //Your Twitter API query
                     $content = $connection->get($query);
 
+                    }
+
                     /*
                      * Examples
                      *  Verify your connection by displaying your account: $query = 'account/verify_credentials';
@@ -69,25 +72,60 @@
                      *  Display a user's latest tweet : $query = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=NOE_interactive&count=1';
                      *  Search for a hastag : $query = 'http://search.twitter.com/search.json?q='.urlencode('#NOE10');
                      */
-
                     echo '
                     <div id="twintegration">
-                        <h3>@NOE_interactive\'s latest Tweet</h3>
+                        <h2>Exemple d\'intégration du dernier tweet de @NOE_interactive</h2>
+                        <div class="formField">
+                            Cette démonstration se base sur le tutoriel <a href="http://noe-interactive.com/comment-integrer-la-nouvelle-api-twitter-1-1-en-php" title="Comment intégrer la nouvelle API twitter (1.1) en php" target="_blank">Comment intégrer la nouvelle API twitter (1.1) en php</a> de notre blog.
+                            Cela implique que vous ayez accomplis toutes les étapes du tutoriel jusqu\'au point 2.3.1.
+                            Du coup cet exemple commence typiquement à partir du point 2.3.2 et vous montre comment procéder pour mettre en forme le dernier tweet d\'un compte particulier.
+                        </div>';
+
+                    if(!empty($consumer_key) && !empty($consumer_secret) && !empty($oauth_token) && !empty($oauth_token_secret)) {
+                        $tweet = $content[0];
+                        echo'
                         <div class="formField">
                             <label>Query: </label>
                             <span>'.$query.'</span>
                         </div>
                         <div class="formField">
-                            <label>Result: </label>
-                            <div>';
-                                print_r($content);
-                    echo '  </div>
+                            <label>Résultat depuis $connection, $content= </label>
+                            <p><code>'.substr(print_r($content,true),0,1000).'</code> etc ...</p>
                         </div>
-                    </div>';
-
+                        <div class="formField">
+                            <label>Le Résultat: </label>
+                            <p>
+                                <div class="twitter_status" id="'.$tweet->id_str.'">
+                                    <div class="bloc_content">
+                                        <p class="status tw_status">'.parseTweet($tweet->text).'</p>
+                                    </div>
+                                    <div class="bloc_caption">
+                                        <a href="http://twitter.com/'.$tweet->user->screen_name.'">
+                                            <img src="'.$tweet->user->profile_image_url.'" alt="@'.$tweet->user->name.'" class="userimg tw_userimg"/>
+                                            <span class="username tw_username">@'.$tweet->user->screen_name.'</span>
+                                        </a>
+                                        <span class="timestamp tw_timestamp">'.date('d M / H:i',strtotime($tweet->created_at)).'</span>
+                                    </div>
+                                </div>
+                            </p>
+                            <div class="visualClear"></div>
+                        </div>';
                     } else {
-                        echo'Please update your settings to provide valid credentials';
+                        echo'<p>Please update your settings to provide valid credentials</p>';
                     }
+                    echo '</div>';
+
+/*
+ * Transform Tweet plain text into clickable text
+ */
+function parseTweet($text) {
+    $text = preg_replace('#http://[a-z0-9._/-]+#i', '<a  target="_blank" href="$0">$0</a>', $text); //Link
+    $text = preg_replace('#@([a-z0-9_]+)#i', '@<a  target="_blank" href="http://twitter.com/$1">$1</a>', $text); //usernames
+    $text = preg_replace('# \#([a-z0-9_-]+)#i', ' #<a target="_blank" href="http://search.twitter.com/search?q=%23$1">$1</a>', $text); //Hashtags
+    $text = preg_replace('#https://[a-z0-9._/-]+#i', '<a  target="_blank" href="$0">$0</a>', $text); //Links
+    return $text;
+}
+
                 ?>
             </section>
         </div>
