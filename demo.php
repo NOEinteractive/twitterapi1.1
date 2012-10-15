@@ -82,7 +82,6 @@
                         </div>';
 
                     if(!empty($consumer_key) && !empty($consumer_secret) && !empty($oauth_token) && !empty($oauth_token_secret)) {
-                        $tweet = $content[0];
                         echo'
                         <div class="formField">
                             <label>Query: </label>
@@ -94,7 +93,9 @@
                         </div>
                         <div class="formField">
                             <label>Le Résultat: </label>
-                            <p>
+                            <p>';
+                            if(!empty($content)){ foreach($content as $tweet){
+                                echo'
                                 <div class="twitter_status" id="'.$tweet->id_str.'">
                                     <div class="bloc_content">
                                         <p class="status tw_status">'.parseTweet($tweet->text).'</p>
@@ -106,7 +107,9 @@
                                         </a>
                                         <span class="timestamp tw_timestamp">'.date('d M / H:i',strtotime($tweet->created_at)).'</span>
                                     </div>
-                                </div>
+                                </div>';
+                            }}
+                                echo'
                             </p>
                             <div class="visualClear"></div>
                         </div>';
